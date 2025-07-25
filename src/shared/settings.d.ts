@@ -43,6 +43,11 @@ export interface Settings {
         onlySpeakers?: boolean;
         onlyDefaultSpeakers?: boolean;
     };
+
+    nsflContentHider?: {
+        enabled: boolean;
+        blockedUserIds: string;
+    };
 }
 
 export interface State {

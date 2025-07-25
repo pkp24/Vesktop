@@ -15,9 +15,11 @@ import { isMac, isWindows } from "renderer/utils";
 import { AutoStartToggle } from "./AutoStartToggle";
 import { DeveloperOptionsButton } from "./DeveloperOptions";
 import { DiscordBranchPicker } from "./DiscordBranchPicker";
+import { NSFLContentHiderSettings } from "./NSFLContentHiderSettings";
 import { NotificationBadgeToggle } from "./NotificationBadgeToggle";
 import { VesktopSettingsSwitch } from "./VesktopSettingsSwitch";
 import { WindowsTransparencyControls } from "./WindowsTransparencyControls";
+
 
 interface BooleanSetting {
     key: keyof typeof Settings.store;
@@ -120,6 +122,7 @@ const SettingsOptions: Record<string, Array<BooleanSetting | SettingsComponent>>
         }
     ],
     Notifications: [NotificationBadgeToggle],
+    "Content Filtering": [NSFLContentHiderSettings],
     Miscellaneous: [
         {
             key: "arRPC",
@@ -135,6 +138,7 @@ const SettingsOptions: Record<string, Array<BooleanSetting | SettingsComponent>>
             defaultValue: false
         }
     ],
+
     "Developer Options": [DeveloperOptionsButton]
 };
 
@@ -148,8 +152,8 @@ function SettingsSections() {
             </Text>
 
             <div className="vcd-settings-category-content">
-                {settings.map(Setting => {
-                    if (typeof Setting === "function") return <Setting settings={Settings} />;
+                {settings.map((Setting, index) => {
+                    if (typeof Setting === "function") return <Setting key={index} settings={Settings} />;
 
                     const { defaultValue, title, description, key, disabled, invisible } = Setting;
                     if (invisible?.()) return null;
